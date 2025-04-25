@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Dashboard</h1>
+    <p id="userEmail">Verificare utilizator...</p>
+    <button id="logoutBtn">Logout</button>
+  </div>
+
+  <script>
+    // 1. Config Firebase
+    const firebaseConfig = {
+      apiKey: "AICI_API_KEY",
+      authDomain: "AICI_AUTH_DOMAIN",
+      projectId: "AICI_PROJECT_ID",
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // 2. Verificăm dacă userul e logat
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        // Este logat
+        document.getElementById('userEmail').innerText = `Logat ca: ${user.email}`;
+      } else {
+        // Nu este logat → redirect la login
+        window.location.href = "/login.html";
+      }
+    });
+
+    // 3. Logout
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      auth.signOut().then(() => {
+        window.location.href = "/login.html";
+      });
+    });
+  </script>
+</body>
+</html>

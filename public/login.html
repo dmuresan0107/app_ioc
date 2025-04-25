@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - GCP Project</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Importăm Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Login</h1>
+    <button id="loginBtn">Login cu Google</button>
+  </div>
+
+  <script>
+    // 1. Configurăm Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyA4Bi_qlrTm86jXDH84TzEorQEWKiexpvE",
+      authDomain: "gcp-project-bff23.firebaseapp.com",
+      projectId: "gcp-project-bff23",
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    const auth = firebase.auth();
+
+    // 2. Funcția de login
+    document.getElementById('loginBtn').addEventListener('click', () => {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider)
+        .then((result) => {
+          // După login, mergem către dashboard
+          window.location.href = "/dashboard";
+        })
+        .catch((error) => {
+          console.error(error);
+          alert("Login failed!");
+        });
+    });
+  </script>
+</body>
+</html>
